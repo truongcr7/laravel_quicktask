@@ -20,8 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('des');
             $table->integer('price')->unsigned();
             $table->integer('category_id')->unsigned();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories');
         });
     }

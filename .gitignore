@@ -23,3 +23,7 @@ Homestead.json
 .phpunit.result.cache
 /public/bower_components
 /public/assets
+<<<<<<< HEAD
+=======
+/public/uploads
+>>>>>>> list and create category
