@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -13,7 +16,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::orderBy('updated_at', 'DESC')->paginate(3);
+
+        return view('admin.product.index', compact('products'));
     }
 
     /**
@@ -23,7 +28,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view('admin.product.create', compact('categories'));
     }
 
     /**
@@ -32,9 +39,22 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $file = $request->image;
+        $fileName = $file->getClientOriginalName();
+        if (!file_exists('./uploads/'.$fileName)) {
+            $file->move('uploads', $fileName);
+        }
+        if (Product::create([
+            'image' => $fileName,
+            'name' => $request->name,
+            'des' => $request->des,
+            'price' =>$request->price,
+            'category_id' => $request->category_id,
+            ])) {
+                return redirect()->route('product.index')->with('success', 'Add product success');
+        }
     }
 
     /**
@@ -56,7 +76,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $p = Product::find($id);
+        $categories = Category::all();
+
+        return view('admin.product.edit', compact('p', 'categories'));
     }
 
     /**
@@ -66,9 +89,32 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $p = Product::find($id);
+        $file = $request->image;
+        if ($file == null) {
+            $p->update([
+                'name' => $request->name,
+                'des' => $request->des,
+                'price' => $request->price,
+                'category_id' => $request->category_id,
+            ]);
+        } else {
+            $fileName = $file->getClientOriginalName();
+            if (!file_exists('./uploads/'.$fileName)) {
+                $file->move('uploads', $fileName);
+            }
+            $p->update([
+                'image' => $fileName,
+                'name' => $request->name,
+                'des' => $request->des,
+                'price' => $request->price,
+                'category_id' => $request->category_id,
+            ]);
+        }
+
+        return redirect()->route('product.index')->with('success', 'Update product success');
     }
 
     /**
@@ -79,6 +125,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Product::destroy($id);
+
+        return redirect()->route('product.index')->with('success', 'Delete product success');
     }
 }
