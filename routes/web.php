@@ -21,7 +21,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/', 'AdminController@index') -> name('admin.index');
 
     Route::resources([
-        'category' => 'CategoryController',
-        'product' => 'ProductController',
+        'categories' => 'CategoryController',
+        'products' => 'ProductController',
     ]);
 });
+
+Route::get('change-language/{locale}', 'AdminController@changeLanguage')->name('change-language');

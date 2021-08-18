@@ -29,7 +29,6 @@ class UpdateCategoryRequest extends FormRequest
                 'required',
                 Rule::unique('categories')->ignore($this->category),
             ],
-            'des' => 'required',
         ];
     }
 }

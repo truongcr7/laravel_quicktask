@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('updated_at', 'DESC')->paginate(4);
+        $categories = Category::orderBy('updated_at', 'DESC')->paginate(config('paginate.category'));
 
         return view('admin.category.index', compact('categories'));
     }
@@ -40,7 +40,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         if (Category::create($request->all())) {
-            return redirect()->route('category.index')->with('success', 'Add category success');
+            return redirect()->route('categories.index')->with('success', __('messages.add-category-success'));
         }
     }
 
@@ -81,7 +81,7 @@ class CategoryController extends Controller
     {
         $category->update($request->all());
 
-        return redirect()->route('category.index')->with('success', 'Update category success');
+        return redirect()->route('categories.index')->with('success', __('messages.update-category-success'));
     }
 
     /**
@@ -95,9 +95,9 @@ class CategoryController extends Controller
         try {
             Category::destroy($id);
 
-            return redirect()->route('category.index')->with('success', 'Delete category success');
+            return redirect()->route('categories.index')->with('success', __('messages.delete-category-success'));
         } catch (Exception $ex) {
-            return redirect()->route('category.index')->with('error', 'Delete category failed');
+            return redirect()->route('categories.index')->with('error', __('messages.delete-category-failed'));
         }
     }
 }

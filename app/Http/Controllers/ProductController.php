@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('updated_at', 'DESC')->paginate(3);
+        $products = Product::orderBy('updated_at', 'DESC')->paginate(config('paginate.product'));
 
         return view('admin.product.index', compact('products'));
     }
@@ -42,10 +42,9 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $file = $request->image;
-        $fileName = $file->getClientOriginalName();
-        if (!file_exists('./uploads/'.$fileName)) {
-            $file->move('uploads', $fileName);
-        }
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move('uploads', $fileName);
+
         if (Product::create([
             'image' => $fileName,
             'name' => $request->name,
@@ -53,7 +52,7 @@ class ProductController extends Controller
             'price' =>$request->price,
             'category_id' => $request->category_id,
             ])) {
-                return redirect()->route('product.index')->with('success', 'Add product success');
+                return redirect()->route('products.index')->with('success', __('messages.add-product-success'));
         }
     }
 
@@ -76,10 +75,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $p = Product::find($id);
+        $product = Product::find($id);
         $categories = Category::all();
 
-        return view('admin.product.edit', compact('p', 'categories'));
+        return view('admin.product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -91,30 +90,25 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, $id)
     {
-        $p = Product::find($id);
+        $product = Product::find($id);
         $file = $request->image;
-        if ($file == null) {
-            $p->update([
-                'name' => $request->name,
-                'des' => $request->des,
-                'price' => $request->price,
-                'category_id' => $request->category_id,
-            ]);
-        } else {
-            $fileName = $file->getClientOriginalName();
-            if (!file_exists('./uploads/'.$fileName)) {
-                $file->move('uploads', $fileName);
-            }
-            $p->update([
-                'image' => $fileName,
-                'name' => $request->name,
-                'des' => $request->des,
-                'price' => $request->price,
-                'category_id' => $request->category_id,
-            ]);
+
+        if ($file != null) {
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move('uploads', $fileName);
+            
+            $product->image = $fileName;
         }
 
-        return redirect()->route('product.index')->with('success', 'Update product success');
+        $product->update([
+            'image' => $product->image,
+            'name' => $request->name,
+            'des' => $request->des,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+        ]);
+
+        return redirect()->route('products.index')->with('success', __('messages.update-product-success'));
     }
 
     /**
@@ -127,6 +121,6 @@ class ProductController extends Controller
     {
         Product::destroy($id);
 
-        return redirect()->route('product.index')->with('success', 'Delete product success');
+        return redirect()->route('products.index')->with('success', __('messages.delete-product-success'));
     }
 }

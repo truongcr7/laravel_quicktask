@@ -2,18 +2,18 @@
 
 return [
     [
-        'label' => 'Dashboard',
+        'label' => 'dashboard',
         'route' => 'admin.index',
         'icon' => 'fa-home'
     ],
     [
-        'label' => 'Category Manager',
-        'route' => 'category.index',
+        'label' => 'category-management',
+        'route' => 'categories.index',
         'icon' => 'fa-list',
     ],
     [
-        'label' => 'Product Manager',
-        'route' => 'product.index',
+        'label' => 'product-management',
+        'route' => 'products.index',
         'icon' => 'fa-shopping-cart',
     ]
 ];

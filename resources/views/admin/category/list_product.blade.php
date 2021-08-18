@@ -1,38 +1,38 @@
 @extends('layouts.admin')
 
+@section('title', __('messages.list-product'))
 @section('main')
 
-<h4>List Product of {{ $cat_name }}</h4>
 <table class="table table-hover table-bordered">
     <thead class="thead-dark">
         <tr>
-            <th class="text-center">Id</th>
-            <th class="text-center">Image</th>
-            <th class="text-center">Name</th>
-            <th class="text-center">Description</th>
-            <th class="text-center">Price</th>
-            <th class="text-center">Category</th>
-            <th class="text-center">Created Date</th>
-            <th class="text-center">Updated Date</th>
-            <th class="text-center">Action</th>
+            <th class="text-center">{{ __('messages.id') }}</th>
+            <th class="text-center">{{ __('messages.image') }}</th>
+            <th class="text-center">{{ __('messages.product-name') }}</th>
+            <th class="text-center">{{ __('messages.description') }}</th>
+            <th class="text-center">{{ __('messages.price') }}</th>
+            <th class="text-center">{{ __('messages.category') }}</th>
+            <th class="text-center">{{ __('messages.created-date') }}</th>
+            <th class="text-center">{{ __('messages.updated-date') }}</th>
+            <th class="text-center">{{ __('messages.handle') }}</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($products as $p)
+        @foreach($products as $product)
             <tr>         
-                <td scope="row">{{ $p->id }}</td>
-                <td><img src="{{ url('uploads') }}/{{ $p->image }}" alt="" style="width: 80px; height: 80px;"></td>
-                <td>{{ $p->name }}</td>
-                <td>{{ $p->des }}</td>
-                <td>{{ $p->price }}</td>
-                <td>{{ $p->category->name }}</td>
-                <td>{{ $p->created_at }}</td>
-                <td>{{ $p->updated_at }}</td>
+                <td scope="row">{{ $product->id }}</td>
+                <td><img src="{{ url('uploads') }}/{{ $product->image }}" id="img-upload" alt=""></td>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->des }}</td>
+                <td>{{ $product->price }}</td>
+                <td>{{ $product->category->name }}</td>
+                <td>{{ $product->created_at }}</td>
+                <td>{{ $product->updated_at }}</td>
                 <td class="text-center">
-                    <a href="{{ route('product.edit', $p->id) }}" class="btn btn-sm btn-success">
+                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-success">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a href="{{ route('product.destroy', $p->id) }}" class="btn btn-sm btn-danger btn-delete">
+                    <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-sm btn-danger btn-delete">
                         <i class="fas fa-trash"></i>
                     </a>
                 </td>
@@ -50,15 +50,6 @@
 
 @section('js')
 
-<script>
-    $('.btn-delete').click(function(ev){
-        ev.preventDefault();
-        var _href = $(this).attr('href');        
-        $('form#form-delete').attr('action', _href);
-        if(confirm('Are you sure to want to delete?')){
-            $('form#form-delete').submit();
-        }
-    });
-</script>
+<script src="{{ url('assets/ad123') }}/dist/js/admin.js"></script>
 
 @stop()
