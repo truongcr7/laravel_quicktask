@@ -16,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', 'AdminController@index') -> name('admin.index');
+
+    Route::resources([
+        'categories' => 'CategoryController',
+        'products' => 'ProductController',
+    ]);
+});
+
+Route::get('change-language/{locale}', 'AdminController@changeLanguage')->name('change-language');
