@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', __('messages.list-category'))
+@section('title', __('messages.list-product'))
 @section('main')
 
 <form class="form-inline">
@@ -11,34 +11,38 @@
         <i class="fas fa-search"></i>
     </button>
 </form>
-<a href="{{ route('categories.create') }}" class="btn btn-outline-primary">{{ __('messages.add-new-category') }}</a>
+<a href="{{ route('products.create') }}" class="btn btn-outline-primary" id="">{{ __('messages.add-new-product') }}</a>
 <hr>
 <table class="table table-hover table-bordered">
     <thead class="thead-dark">
         <tr>
             <th class="text-center">{{ __('messages.number') }}</th>
-            <th class="text-center">{{ __('messages.category-name') }}</th>
+            <th class="text-center">{{ __('messages.image') }}</th>
+            <th class="text-center">{{ __('messages.product-name') }}</th>
             <th class="text-center">{{ __('messages.description') }}</th>
-            <th class="text-center">{{ __('messages.list-product') }}</th>
+            <th class="text-center">{{ __('messages.price') }}</th>
+            <th class="text-center">{{ __('messages.category') }}</th>
             <th class="text-center">{{ __('messages.created-date') }}</th>
             <th class="text-center">{{ __('messages.updated-date') }}</th>
             <th class="text-center">{{ __('messages.handle') }}</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($categories as $category)
-            <tr>
+        @foreach($products as $product)
+            <tr>         
                 <td scope="row">{{ $loop->index + 1 }}</td>
-                <td>{{ $category->name }}</td>
-                <td>{{ $category->des }}</td>
-                <th class="text-center"><a href="{{ route('categories.show', $category->id) }}" class="btn btn-info btn-sm">{{ __('messages.view') }}</a></th>
-                <td>{{ $category->created_at }}</td>
-                <td>{{ $category->updated_at }}</td>
+                <td><img src="{{ asset('uploads/' . $product->image) }}" id="img-upload" alt=""></td>
+                <td>{{ $product->name }}</td>
+                <td>{{ $product->des }}</td>
+                <td>{{ $product->price }}</td>
+                <td>{{ $product->category->name }}</td>
+                <td>{{ $product->created_at }}</td>
+                <td>{{ $product->updated_at }}</td>
                 <td class="text-center">
-                    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-success">
+                    <a href="{{ route('products.edit', $product->id) }}" class="btn btn-sm btn-success">
                         <i class="fas fa-edit"></i>
                     </a>
-                    <a href="{{ route('categories.destroy', $category->id) }}" class="btn btn-sm btn-danger btn-delete">
+                    <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-sm btn-danger btn-delete">
                         <i class="fas fa-trash"></i>
                     </a>
                 </td>
@@ -52,7 +56,7 @@
 </form>
 <hr>
 <div>
-    {{ $categories->links() }}
+    {{ $products->links() }}
 </div>
 @stop();
 

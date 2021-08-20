@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel Quicktask</title>
 
-    <link rel="stylesheet" href="{{ asset('assets/ad123') }}/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/ad123') }}/plugins/flag-icon-css/css/flag-icon.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/ad123') }}/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/ad123') }}/dist/css/admin.css">
+    <link rel="stylesheet" href="{{ asset('assets/ad123/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/ad123/plugins/flag-icon-css/css/flag-icon.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/ad123/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/ad123/dist/css/admin.css') }}">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -104,9 +104,9 @@
         </div>
     </div>
 
-    <script src="{{ asset('assets/ad123') }}/plugins/jquery/jquery.min.js"></script>
-    <script src="{{ asset('assets/ad123') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets/ad123') }}/dist/js/adminlte.min.js"></script>
+    <script src="{{ asset('assets/ad123/plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/ad123/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/ad123/dist/js/adminlte.min.js') }}"></script>
 
     @yield('js')
 
