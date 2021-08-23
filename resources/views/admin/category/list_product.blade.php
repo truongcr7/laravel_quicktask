@@ -21,7 +21,7 @@
         @foreach($products as $product)
             <tr>         
                 <td scope="row">{{ $loop->index + 1 }}</td>
-                <td><img src="{{ asset('uploads') }}/{{ $product->image }}" id="img-upload" alt=""></td>
+                <td><img src="{{ asset('uploads/' . $product->image) }}" id="img-upload" alt=""></td>
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->des }}</td>
                 <td>{{ $product->price }}</td>
@@ -50,6 +50,6 @@
 
 @section('js')
 
-<script src="{{ asset('assets/ad123') }}/dist/js/admin.js"></script>
+<script src="{{ asset('assets/ad123/dist/js/admin.js') }}"></script>
 
 @stop()
